@@ -5,7 +5,7 @@ result = """
 
 """
 stud_obj = json.loads(result)
-print(type(stud_obj))
+print(stud_obj)
 
 count = 0
 for el in stud_obj:
@@ -13,4 +13,4 @@ for el in stud_obj:
         count +=1
         print(el["key"])
 
-print(count)
+# print(count)
