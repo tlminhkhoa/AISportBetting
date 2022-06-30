@@ -43,6 +43,7 @@ def create_table(c):
   currentDate char(25),
   currentDate_timestamp integer,
   modelBet char(1),
+  betToResult char(1),
   modelProba DECIMAL(7, 6),
   KellyCriterion DECIMAL(7, 6),
   betDatePortion DECIMAL(7, 6),

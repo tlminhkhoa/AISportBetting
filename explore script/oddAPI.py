@@ -23,29 +23,31 @@ for el in result:
         drawOdd = response["bookmakers"][0]["bets"][0]["values"][1]["odd"]
         awayOdd = response["bookmakers"][0]["bets"][0]["values"][2]["odd"]
 
-        try:
-            c.execute(""" 
-            INSERT INTO SoccerMatch VALUES(?,?,?,?,?,?,?,?)
-            """,(fixtureID,commence_time,commence_timestamp,leagueId,leagueName,homeOdd,drawOdd,awayOdd))
+        print(response["bookmakers"][0]["bets"][0]["values"])
+        # try:
+        #     c.execute(""" 
+        #     INSERT INTO SoccerMatch VALUES(?,?,?,?,?,?,?,?)
+        #     """,(fixtureID,commence_time,commence_timestamp,leagueId,leagueName,homeOdd,drawOdd,awayOdd))
 
-            c.execute(""" 
-            INSERT INTO Team VALUES(?,?,?)
-            """,(fixtureID,None,None))
+        #     # insert fixtureID for the other tables
+        #     c.execute(""" 
+        #     INSERT INTO Team VALUES(?,?,?)
+        #     """,(fixtureID,None,None))
 
-            c.execute(""" 
-            INSERT INTO Result VALUES(?,?,?,?)
-            """,(fixtureID,None,None,None))
+        #     c.execute(""" 
+        #     INSERT INTO Result VALUES(?,?,?,?)
+        #     """,(fixtureID,None,None,None))
 
-            c.execute(""" 
-            INSERT INTO modelData VALUES(?,?,?,?,?,?,?,?)
-            """,(fixtureID,None,None,None,None,None,None,None))
+        #     c.execute(""" 
+        #     INSERT INTO modelData VALUES(?,?,?,?,?,?,?,?)
+        #     """,(fixtureID,None,None,None,None,None,None,None))
 
-        except Exception as e:
-            print(str(e))
-            print((fixtureID,commence_time,commence_timestamp,leagueId,leagueName,homeOdd,drawOdd,awayOdd))
+        # except Exception as e:
+        #     print(str(e))
+        #     print((fixtureID,commence_time,commence_timestamp,leagueId,leagueName,homeOdd,drawOdd,awayOdd))
 
 
-conn.commit() 
+# conn.commit() 
 
 c.close()
 conn.close()
