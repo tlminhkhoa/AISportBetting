@@ -1,4 +1,6 @@
 import sqlite3
+import datetime
+import time
 def create_table(c):
     try:
         c.execute("""CREATE TABLE IF NOT EXISTS SoccerMatch(
@@ -10,8 +12,6 @@ def create_table(c):
   homeOdd DECIMAL(4, 2),
   drawOdd DECIMAL(4, 2),
   awayOdd DECIMAL(4, 2)
-  
-
 )""")
 
         c.execute("""CREATE TABLE IF NOT EXISTS Team(
@@ -32,25 +32,33 @@ def create_table(c):
   
         c.execute("""CREATE TABLE IF NOT EXISTS BudgetTrack(
   currentDate  char(25) PRIMARY KEY ,
+  currentDate_timestamp integer,
   runningMoney real,
-  refillCount integer,
+  refillAmount integer,
   withdrawAmount integer,
-  TotalBudget real
+  TotalBudget interger
  ) """) 
     
         c.execute("""CREATE TABLE IF NOT EXISTS modelData(
   fixtureId  integer PRIMARY KEY,
-  currentDate char(25),
-  currentDate_timestamp integer,
   modelBet char(1),
-  betToResult char(1),
   modelProba DECIMAL(7, 6),
   KellyCriterion DECIMAL(7, 6),
-  betDatePortion DECIMAL(7, 6),
-  BetAmount DECIMAL(7, 6),
+  FOREIGN KEY (fixtureId) REFERENCES SoccerMatch(fixtureId)
+ )""")
+
+        c.execute("""CREATE TABLE IF NOT EXISTS PlaceBetTable(
+  fixtureId  integer PRIMARY KEY,
+  currentDate  char(25),
+  betToResult char (1),
+  betOdd DECIMAL(7, 6),
+  betDatePortion real,
+  BetAmount real,
+  Gain real,
   FOREIGN KEY (fixtureId) REFERENCES SoccerMatch(fixtureId)
   FOREIGN KEY (currentDate) REFERENCES BudgetTrack(currentDate)
  )""")
+        
         conn.commit()
     except Exception as e:
         print(str(e))
@@ -60,6 +68,9 @@ if __name__ == "__main__":
     # create the database
     conn = sqlite3.connect('./DailyData/SoccerData.db')
     c = conn.cursor()
+
+      
+
     create_table(c)
     c.close()
     conn.close()

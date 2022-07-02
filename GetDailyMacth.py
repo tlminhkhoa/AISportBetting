@@ -75,7 +75,7 @@ def InsertMatch(c,returnOddList):
                 """,(fixtureID,None,None,None))
 
                 c.execute(""" 
-                INSERT INTO modelData VALUES(?,?,?,?,?,?,?,?)
+                INSERT INTO modelData VALUES(?,?,?,?)
                 """,(fixtureID,None,None,None,None,None,None,None))
 
             except Exception as e:
