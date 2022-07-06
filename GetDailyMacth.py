@@ -1,7 +1,4 @@
 import sqlite3
-import requests
-import datetime
-import time
 import http.client
 import json
 
@@ -76,7 +73,7 @@ def InsertMatch(c,returnOddList):
 
                 c.execute(""" 
                 INSERT INTO modelData VALUES(?,?,?,?)
-                """,(fixtureID,None,None,None,None,None,None,None))
+                """,(fixtureID,None,None,None))
 
             except Exception as e:
                 print(str(e))

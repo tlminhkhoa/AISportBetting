@@ -74,9 +74,6 @@ def addModelData(df,model):
 
     df = df.apply(AddKellyCriterion,axis =1)
 
-    # only get KellyCriterion > 0
-    # df = df[df["KellyCriterion"] > KellyThrehold]
-
     
     return df
 
@@ -99,7 +96,6 @@ clf = pickle.load(open(filename, 'rb'))
 KellyThrehold = 0
 df = getUnpredictedMatch(c)
 df = addModelData(df,clf)
-print(df)
 InsertPrediction(c,df)
 
 

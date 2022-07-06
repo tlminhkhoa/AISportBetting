@@ -1,3 +1,4 @@
+from cmath import e
 import sqlite3
 import pandas as pd
 import time
@@ -18,12 +19,16 @@ def getKellyPositiveMatch(c):
     listData = c.fetchall()
     currentDate_timestamp = listData[0][0]
     
-
+    today = datetime.datetime.now()
+    date = today.replace(hour=0, minute=0, second=0, microsecond=0)
+    date_timestamp = time.mktime(date.timetuple())
+    # print(date_timestamp)
     c.execute(""" SELECT SoccerMatch.fixtureId, SoccerMatch.homeOdd, SoccerMatch.drawOdd, SoccerMatch.awayOdd ,SoccerMatch.commence_time , modelData.modelBet,modelData.KellyCriterion from SoccerMatch
     join modelData on modelData.fixtureId  = SoccerMatch.fixtureId
-     where SoccerMatch.commence_timestamp > ? and modelData.KellyCriterion > 0""", (currentDate_timestamp,))
+     where SoccerMatch.commence_timestamp > ? and modelData.KellyCriterion > 0.3 and SoccerMatch.commence_timestamp < ?;""", (currentDate_timestamp,date_timestamp,))
     listData = c.fetchall()
-    
+    # print(listData)
+    # print(currentDate_timestamp)
     fixtureIdList = []
     homeOddList = []
     drawOddList = []
@@ -92,9 +97,12 @@ def InsertTheBet(c,df):
     
     for row in df.iterrows():
         data = row[1]
-        c.execute(""" 
-                    INSERT INTO PlaceBetTable VALUES(?,?,?,?,?,?,?)
-                    """,(data["fixtureId"],str(data["currentDate"]),None,data["odd"],data["betDatePortion"],None,None))
+        try:
+            c.execute(""" 
+                        INSERT INTO PlaceBetTable VALUES(?,?,?,?,?,?,?)
+                        """,(data["fixtureId"],str(data["currentDate"]),None,data["odd"],data["betDatePortion"],None,None))
+        except Exception as e :
+            print(e)
         conn.commit()
 
     

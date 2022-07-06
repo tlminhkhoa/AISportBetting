@@ -37,6 +37,7 @@ def getUnknowBetResult(c):
     return df
 
 def calGainAndBetAmount(c,df):
+
     softmaxList =[]
     for date in df["currentDate"].unique():
         # print(date)
@@ -49,7 +50,7 @@ def calGainAndBetAmount(c,df):
         c.execute("""SELECT *, max(currentDate_timestamp) from BudgetTrack """)
         listData = c.fetchall()
         
-        print(date_sample)
+        
         runningMoney = listData[0][2]
         refillAmount = listData[0][3]
         withdrawAmount = listData[0][4]
@@ -81,6 +82,7 @@ def calGainAndBetAmount(c,df):
             refillAmount = refillAmount + 10 
         if runningMoney > 1000:
             withdrawAmount = withdrawAmount + 1000
+            runningMoney = runningMoney - 1000
 
         TotalBudget = runningMoney - refillAmount + withdrawAmount
 
