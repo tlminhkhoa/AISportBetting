@@ -99,6 +99,6 @@ def calGainAndBetAmount(c,df):
 
 df = getUnknowBetResult(c)
 calGainAndBetAmount(c,df)
-# conn.commit()
+
 c.close()
 conn.close()

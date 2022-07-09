@@ -5,7 +5,7 @@ c = conn.cursor()
 
 c.execute(""" select  PlaceBetTable.currentDate,PlaceBetTable.betToResult ,modelData.KellyCriterion, PlaceBetTable.betOdd,PlaceBetTable.fixtureId from PlaceBetTable 
     join modelData on PlaceBetTable.fixtureId = modelData.fixtureId
-    where modelData.KellyCriterion > 0.3
+    where modelData.KellyCriterion > 0
 
 """)
 listData = c.fetchall()
@@ -25,6 +25,7 @@ df["currentDate"] = currentDate
 df["betToResult"] = betToResult
 df["KellyCriterion"] = KellyCriterion
 df["betOdd"] = betOdd
+
 df.dropna(inplace=True)
 
 

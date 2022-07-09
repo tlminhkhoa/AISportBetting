@@ -18,16 +18,17 @@ def getKellyPositiveMatch(c):
     """)
     listData = c.fetchall()
     currentDate_timestamp = listData[0][0]
-    
+    print(currentDate_timestamp)
     today = datetime.datetime.now()
     date = today.replace(hour=0, minute=0, second=0, microsecond=0)
-    date_timestamp = time.mktime(date.timetuple())
+    today_timestamp = time.mktime(date.timetuple())
     # print(date_timestamp)
     c.execute(""" SELECT SoccerMatch.fixtureId, SoccerMatch.homeOdd, SoccerMatch.drawOdd, SoccerMatch.awayOdd ,SoccerMatch.commence_time , modelData.modelBet,modelData.KellyCriterion from SoccerMatch
     join modelData on modelData.fixtureId  = SoccerMatch.fixtureId
-     where SoccerMatch.commence_timestamp > ? and modelData.KellyCriterion > 0.3 and SoccerMatch.commence_timestamp < ?;""", (currentDate_timestamp,date_timestamp,))
+     where SoccerMatch.commence_timestamp > ? and modelData.KellyCriterion > 0.3 and SoccerMatch.commence_timestamp < ?;""", (currentDate_timestamp,today_timestamp,))
+    
     listData = c.fetchall()
-    # print(listData)
+    print(listData)
     # print(currentDate_timestamp)
     fixtureIdList = []
     homeOddList = []
@@ -102,6 +103,7 @@ def InsertTheBet(c,df):
                         INSERT INTO PlaceBetTable VALUES(?,?,?,?,?,?,?)
                         """,(data["fixtureId"],str(data["currentDate"]),None,data["odd"],data["betDatePortion"],None,None))
         except Exception as e :
+            print(data)
             print(e)
         conn.commit()
 
