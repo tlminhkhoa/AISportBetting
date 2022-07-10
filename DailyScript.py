@@ -1,6 +1,14 @@
 import sqlite3
 import datetime 
 import time
+import pandas as pd
+
+import GetDailyMacth
+import GetModelPrediction
+import GetDailyBet
+import GetDailyResult
+import CheckBetResult
+
 conn = sqlite3.connect('./DailyData/SoccerData.db')
 c = conn.cursor()
 
@@ -22,13 +30,11 @@ if lenBudgetTrack[0][0] == 0:
 
     conn.commit()
 
-now = datetime.datetime.now()
-today = str(now.replace(hour=0, minute=0, second=0, microsecond=0))
-date_format = datetime.datetime.strptime("2022-06-28 00:00:00",
-                                            "%Y-%m-%d %H:%M:%S")
-date_sample  = time.mktime(date_format.timetuple())
-print(date_format)
-print(date_sample)
+GetDailyMacth.getDailyMatch(c,conn)
+GetModelPrediction.GetModelPrediction(c,conn)
+GetDailyBet.GetDailyBet(c,conn)
+GetDailyResult.GetDailyResult(c,conn)
+CheckBetResult.CheckBetResult(c,conn)
 conn.commit()
 c.close()
 conn.close()

@@ -87,13 +87,18 @@ def InsertPrediction(c,df):
                         WHERE fixtureId = ?;
                         """,(data["bet"], data["modelProba"], data["KellyCriterion"], data["fixtureId"]))
         
-
-
+def GetModelPrediction(c,conn):
+    filename = 'finalized_model.sav'
+    clf = pickle.load(open(filename, 'rb'))
+    df = getUnpredictedMatch(c)
+    df = addModelData(df,clf)
+    InsertPrediction(c,df)
+    conn.commit() 
 
 filename = 'finalized_model.sav'
 clf = pickle.load(open(filename, 'rb'))
 
-KellyThrehold = 0
+
 df = getUnpredictedMatch(c)
 df = addModelData(df,clf)
 InsertPrediction(c,df)

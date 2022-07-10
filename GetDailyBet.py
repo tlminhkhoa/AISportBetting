@@ -107,8 +107,12 @@ def InsertTheBet(c,df):
             print(e)
         conn.commit()
 
-    
-
+def GetDailyBet(c,conn):
+    df = getKellyPositiveMatch(c)
+    df = df.apply(stripIsoTime,axis=1)
+    df = df.apply(addBetOdd,axis=1)
+    df = addBetDateProprtion(df)
+    InsertTheBet(c,df)
 
 df = getKellyPositiveMatch(c)
 df = df.apply(stripIsoTime,axis=1)

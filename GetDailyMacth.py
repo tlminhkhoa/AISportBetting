@@ -1,6 +1,7 @@
 import sqlite3
 import http.client
 import json
+from datetime import date
 
 def getOdd(key,date):
     # location is Toronto
@@ -80,12 +81,16 @@ def InsertMatch(c,returnOddList):
                 print((fixtureID,commence_time,commence_timestamp,leagueId,leagueName,homeOdd,drawOdd,awayOdd))
 
 
-import sqlite3
+
+def getDailyMatch(c,conn):
+    today = date.today()
+    returnOddList = getOdd("337bf8dbb961deefafa31fc66c0c8806",str(today))
+    InsertMatch(c,returnOddList)
+    conn.commit() 
 
 conn = sqlite3.connect('./DailyData/SoccerData.db')
 c = conn.cursor()
 
-from datetime import date
 today = date.today()
 
 returnOddList = getOdd("337bf8dbb961deefafa31fc66c0c8806",str(today))

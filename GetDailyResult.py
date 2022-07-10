@@ -85,6 +85,12 @@ def InsertUpdateResult(c,listData):
                         WHERE fixtureId = ?;
                         """,(homeTeamName,awayTeamName,fixtureID))
 
+def GetDailyResult(c,conn):
+    ListMatchUpdate = getMatchWithOutResult(c)
+    listData = getResults("337bf8dbb961deefafa31fc66c0c8806",ListMatchUpdate)
+    InsertUpdateResult(c,listData)
+    conn.commit() 
+
 conn = sqlite3.connect('./DailyData/SoccerData.db')
 c = conn.cursor()
 key = "337bf8dbb961deefafa31fc66c0c8806"
