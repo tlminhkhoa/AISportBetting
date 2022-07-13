@@ -88,15 +88,15 @@ def getDailyMatch(c,conn):
     InsertMatch(c,returnOddList)
     conn.commit() 
 
-conn = sqlite3.connect('./DailyData/SoccerData.db')
-c = conn.cursor()
+# conn = sqlite3.connect('./DailyData/SoccerData.db')
+# c = conn.cursor()
 
-today = date.today()
+# today = date.today()
 
-returnOddList = getOdd("337bf8dbb961deefafa31fc66c0c8806",str(today))
-InsertMatch(c,returnOddList)
+# returnOddList = getOdd("337bf8dbb961deefafa31fc66c0c8806",str(today))
+# InsertMatch(c,returnOddList)
 
-conn.commit() 
+# conn.commit() 
 
-c.close()
-conn.close()
+# c.close()
+# conn.close()

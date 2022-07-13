@@ -95,15 +95,15 @@ def GetModelPrediction(c,conn):
     InsertPrediction(c,df)
     conn.commit() 
 
-filename = 'finalized_model.sav'
-clf = pickle.load(open(filename, 'rb'))
+# filename = 'finalized_model.sav'
+# clf = pickle.load(open(filename, 'rb'))
 
 
-df = getUnpredictedMatch(c)
-df = addModelData(df,clf)
-InsertPrediction(c,df)
+# df = getUnpredictedMatch(c)
+# df = addModelData(df,clf)
+# InsertPrediction(c,df)
 
 
-conn.commit()
-c.close()
-conn.close()
+# conn.commit()
+# c.close()
+# conn.close()

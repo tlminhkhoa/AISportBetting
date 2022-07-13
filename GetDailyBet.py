@@ -28,7 +28,7 @@ def getKellyPositiveMatch(c):
      where SoccerMatch.commence_timestamp > ? and modelData.KellyCriterion > 0.3 and SoccerMatch.commence_timestamp < ?;""", (currentDate_timestamp,today_timestamp,))
     
     listData = c.fetchall()
-    print(listData)
+
     # print(currentDate_timestamp)
     fixtureIdList = []
     homeOddList = []
@@ -114,10 +114,10 @@ def GetDailyBet(c,conn):
     df = addBetDateProprtion(df)
     InsertTheBet(c,df)
 
-df = getKellyPositiveMatch(c)
-df = df.apply(stripIsoTime,axis=1)
-df = df.apply(addBetOdd,axis=1)
-df = addBetDateProprtion(df)
-InsertTheBet(c,df)
-c.close()
-conn.close()
+# df = getKellyPositiveMatch(c)
+# df = df.apply(stripIsoTime,axis=1)
+# df = df.apply(addBetOdd,axis=1)
+# df = addBetDateProprtion(df)
+# InsertTheBet(c,df)
+# c.close()
+# conn.close()

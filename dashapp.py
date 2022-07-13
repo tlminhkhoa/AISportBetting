@@ -1,9 +1,15 @@
 import dash
 import dash_core_components as dcc
+import dash_bootstrap_components as dbc
 import dash_html_components as html
 import plotly.express as px
 import pandas as pd
 import sqlite3
+
+CARD_TEXT_STYLE = {
+    'textAlign': 'center',
+    'color': '#0074D9'
+}
 
 conn = sqlite3.connect('./DailyData/SoccerData.db')
 c = conn.cursor()
@@ -43,6 +49,66 @@ app = dash.Dash()
 
 fig = px.line(df.sort_values(by = ["currentDate_timestamp"]), x="currentDate", y="TotalBudget")
 
+content_first_row = dbc.Row([
+    dbc.Col(
+        dbc.Card(
+            [
+
+                dbc.CardBody(
+                    [
+                        html.H4(id='card_title_1', children=['Card Title 1'], className='card-title',
+                                style=CARD_TEXT_STYLE),
+                        html.P(id='card_text_1', children=['Sample text.'], style=CARD_TEXT_STYLE),
+                    ]
+                )
+            ]
+        ),
+        md=3
+    ),
+    dbc.Col(
+        dbc.Card(
+            [
+
+                dbc.CardBody(
+                    [
+                        html.H4('Card Title 2', className='card-title', style=CARD_TEXT_STYLE),
+                        html.P('Sample text.', style=CARD_TEXT_STYLE),
+                    ]
+                ),
+            ]
+
+        ),
+        md=3
+    ),
+    dbc.Col(
+        dbc.Card(
+            [
+                dbc.CardBody(
+                    [
+                        html.H4('Card Title 3', className='card-title', style=CARD_TEXT_STYLE),
+                        html.P('Sample text.', style=CARD_TEXT_STYLE),
+                    ]
+                ),
+            ]
+
+        ),
+        md=3
+    ),
+    dbc.Col(
+        dbc.Card(
+            [
+                dbc.CardBody(
+                    [
+                        html.H4('Card Title 4', className='card-title', style=CARD_TEXT_STYLE),
+                        html.P('Sample text.', style=CARD_TEXT_STYLE),
+                    ]
+                ),
+            ]
+        ),
+        md=3
+    )
+])
+
 
 
 app.layout = html.Div(
@@ -65,7 +131,8 @@ app.layout = html.Div(
                     html.Div(
                         className="top_metrics", style = {"background": "#EAEAEA","height": "200px","width":"100%","position":"relative","top": "0","right": "0"},
                         children=[
-                        'This is top metrics'
+                        'This is top metrics',
+                        content_first_row
                         ]
                     ),
                     html.Div(

@@ -91,15 +91,15 @@ def GetDailyResult(c,conn):
     InsertUpdateResult(c,listData)
     conn.commit() 
 
-conn = sqlite3.connect('./DailyData/SoccerData.db')
-c = conn.cursor()
-key = "337bf8dbb961deefafa31fc66c0c8806"
+# conn = sqlite3.connect('./DailyData/SoccerData.db')
+# c = conn.cursor()
+# key = "337bf8dbb961deefafa31fc66c0c8806"
 
-ListMatchUpdate = getMatchWithOutResult(c)
-listData = getResults(key,ListMatchUpdate)
-InsertUpdateResult(c,listData)
+# ListMatchUpdate = getMatchWithOutResult(c)
+# listData = getResults(key,ListMatchUpdate)
+# InsertUpdateResult(c,listData)
 
-conn.commit() 
+# conn.commit() 
 
-c.close()
-conn.close()
+# c.close()
+# conn.close()

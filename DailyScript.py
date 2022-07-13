@@ -31,7 +31,10 @@ if lenBudgetTrack[0][0] == 0:
     conn.commit()
 
 GetDailyMacth.getDailyMatch(c,conn)
-GetModelPrediction.GetModelPrediction(c,conn)
+try:
+    GetModelPrediction.GetModelPrediction(c,conn)
+except:
+    print("all macth predicted")
 GetDailyBet.GetDailyBet(c,conn)
 GetDailyResult.GetDailyResult(c,conn)
 CheckBetResult.CheckBetResult(c,conn)

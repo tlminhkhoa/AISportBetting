@@ -93,12 +93,13 @@ def calGainAndBetAmount(c,df):
         conn.commit()
         
 
-        
+def CheckBetResult(c,conn):
+    df = getUnknowBetResult(c)
+    calGainAndBetAmount(c,df)
 
 
+# df = getUnknowBetResult(c)
+# calGainAndBetAmount(c,df)
 
-df = getUnknowBetResult(c)
-calGainAndBetAmount(c,df)
-
-c.close()
-conn.close()
+# c.close()
+# conn.close()
