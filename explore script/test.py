@@ -6,7 +6,7 @@ c = conn.cursor()
 c.execute(""" select  SoccerMatch.commence_time ,SoccerMatch.commence_timestamp ,modelData.modelBet, Result.FTR , modelData.KellyCriterion , SoccerMatch.homeOdd,SoccerMatch.drawOdd, SoccerMatch.awayOdd from SoccerMatch 
     join modelData on SoccerMatch.fixtureId = modelData.fixtureId
     join Result on Result.fixtureId = SoccerMatch.fixtureId
-    where modelData.KellyCriterion > 0.4
+    where modelData.KellyCriterion > 0.3
 
 """)
 listData = c.fetchall()

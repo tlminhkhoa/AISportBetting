@@ -18,7 +18,7 @@ def getKellyPositiveMatch(c):
     """)
     listData = c.fetchall()
     currentDate_timestamp = listData[0][0]
-    print(currentDate_timestamp)
+
     today = datetime.datetime.now()
     date = today.replace(hour=0, minute=0, second=0, microsecond=0)
     today_timestamp = time.mktime(date.timetuple())

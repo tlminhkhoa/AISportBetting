@@ -3,8 +3,8 @@ import pandas as pd
 import pickle
 import numpy as np
 
-conn = sqlite3.connect('./DailyData/SoccerData.db')
-c = conn.cursor()
+# conn = sqlite3.connect('./DailyData/SoccerData.db')
+# c = conn.cursor()
 
 
 def getUnpredictedMatch(c):
@@ -95,6 +95,11 @@ def GetModelPrediction(c,conn):
     InsertPrediction(c,df)
     conn.commit() 
 
+# conn = sqlite3.connect('./DailyData/SoccerData.db')
+# c = conn.cursor()
+# GetModelPrediction(c,conn)
+# c.close()
+# conn.close()
 # filename = 'finalized_model.sav'
 # clf = pickle.load(open(filename, 'rb'))
 

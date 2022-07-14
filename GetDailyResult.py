@@ -4,6 +4,7 @@ import sqlite3
 import pytz
 import http.client
 import json
+import time
 
 
 def getMatchWithOutResult(c):
@@ -38,8 +39,11 @@ def getResults(key,ListMatchUpdate):
             'x-rapidapi-key': key
             }
 
+    # Prevent rate limit (10 request per minutes)
+    count = 0
     returnList = []
     for matchUpdate in ListMatchUpdate:
+
         connHttp.request("GET", "/fixtures?ids={}".format(matchUpdate), headers=headers)
         res = connHttp.getresponse()
         if res.status != 200:
@@ -49,8 +53,19 @@ def getResults(key,ListMatchUpdate):
             data = res.read()
             data = json.loads(data)
             returnList.append(data)
+        
+        count += 1
+        if count == 10:
+            count = 0
+            time.sleep(60)
 
     connHttp.close()
+
+    with open("./debug.txt", 'w',encoding="utf-8") as fp:
+        for item in returnList:
+            # write each item on a new line
+            fp.write("%s\n" % item)
+    print('Done')
     return returnList
 
 
@@ -64,7 +79,10 @@ def InsertUpdateResult(c,listData):
             awayTeamName = response["teams"]["away"]["name"]
             homeGoal = response["goals"]["home"]
             awayGoal = response["goals"]["away"]
-
+            
+            if fixtureID == 816981:
+                print("here")
+                print(fixtureID,homeTeamName,awayTeamName,homeGoal,awayGoal)
             if awayGoal != None:
                 if homeGoal > awayGoal:
                     FTR = "H"
@@ -84,15 +102,22 @@ def InsertUpdateResult(c,listData):
                         SET homeTeam = ?, awayTeam= ? 
                         WHERE fixtureId = ?;
                         """,(homeTeamName,awayTeamName,fixtureID))
+            conn.commit() 
 
 def GetDailyResult(c,conn):
     ListMatchUpdate = getMatchWithOutResult(c)
+    # print(ListMatchUpdate)
     listData = getResults("337bf8dbb961deefafa31fc66c0c8806",ListMatchUpdate)
+    # print(listData)
+    # print(listData)
     InsertUpdateResult(c,listData)
-    conn.commit() 
+    # 
 
-# conn = sqlite3.connect('./DailyData/SoccerData.db')
-# c = conn.cursor()
+conn = sqlite3.connect('./DailyData/SoccerData.db')
+c = conn.cursor()
+GetDailyResult(c,conn)
+c.close()
+conn.close()
 # key = "337bf8dbb961deefafa31fc66c0c8806"
 
 # ListMatchUpdate = getMatchWithOutResult(c)

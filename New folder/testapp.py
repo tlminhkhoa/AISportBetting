@@ -63,7 +63,7 @@ content_first_row = dbc.Row([
 
                 dbc.CardBody(
                     [
-                        html.H4(id='card_title_1', children=[int(max(df["runningMoney"]))], className='card-title',
+                        html.H4(id='card_title_1', children=[int(df["runningMoney"].tail(1))], className='card-title',
                                 style=CARD_TEXT_STYLE),
                         html.P(id='card_text_1', children=['runningMoney'], style=CARD_TEXT_STYLE),
                     ]
