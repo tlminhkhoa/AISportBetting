@@ -6,8 +6,7 @@ import dateutil.parser
 import datetime
 import numpy as np
 
-conn = sqlite3.connect('./DailyData/SoccerData.db')
-c = conn.cursor()
+
 
 
 def getKellyPositiveMatch(c):
@@ -83,7 +82,7 @@ def addBetDateProprtion(df):
     
     df["commence_time"]= pd.to_datetime(df["commence_time"])
     df = df.sort_values(by = ["commence_time"], ascending=True)
-    print(df)
+
     softmaxList =[]
     for date in df["currentDate"].unique():        
         data = df[df["currentDate"] == date]
@@ -94,7 +93,7 @@ def addBetDateProprtion(df):
 
     return df
 
-def InsertTheBet(c,df):
+def InsertTheBet(c,conn,df):
     
     for row in df.iterrows():
         data = row[1]
@@ -112,12 +111,16 @@ def GetDailyBet(c,conn):
     df = df.apply(stripIsoTime,axis=1)
     df = df.apply(addBetOdd,axis=1)
     df = addBetDateProprtion(df)
-    InsertTheBet(c,df)
+    InsertTheBet(c,conn,df)
 
+
+# conn = sqlite3.connect('./DailyData/SoccerData.db')
+# c = conn.cursor()
+# GetDailyBet(c,conn)
+# c.close()
+# conn.close()
 # df = getKellyPositiveMatch(c)
 # df = df.apply(stripIsoTime,axis=1)
 # df = df.apply(addBetOdd,axis=1)
 # df = addBetDateProprtion(df)
 # InsertTheBet(c,df)
-# c.close()
-# conn.close()

@@ -2,8 +2,7 @@ import sqlite3
 import pandas as pd 
 import time
 import datetime
-conn = sqlite3.connect('./DailyData/SoccerData.db')
-c = conn.cursor()
+
 
 def getUnknowBetResult(c):
     c.execute("""SELECT PlaceBetTable.fixtureId , PlaceBetTable.currentDate , PlaceBetTable.betOdd, PlaceBetTable.betDatePortion, Result.FTR, modelData.modelBet
@@ -34,6 +33,7 @@ def getUnknowBetResult(c):
     df["FTR"] = FTRList
     df["modelBet"] = modelBetList
     df["betToResult"] = df["FTR"] == df["modelBet"]
+    df = df.sort_values(by = ["currentDate"])
     return df
 
 def calGainAndBetAmount(c,df):
@@ -75,31 +75,45 @@ def calGainAndBetAmount(c,df):
                             SET  betToResult = ?, BetAmount = ? ,Gain = ?  
                             WHERE fixtureId = ?;
                             """,(row["betToResult"], row["betDatePortion"] * runningMoney ,gainTemp,row["fixtureId"]))
-            
 
+        print(date , runningMoney)
+        print(date , gain)
         runningMoney = runningMoney + sum(gain)
+        
+        print(date , runningMoney)
+
+        
+        
         if runningMoney < 1:
-            refillAmount = refillAmount + 10 
+            refillAmount = refillAmount + 100
+            runningMoney += 100
         if runningMoney > 1000:
             withdrawAmount = withdrawAmount + 1000
             runningMoney = runningMoney - 1000
+        
+        if runningMoney - refillAmount  > 0:
+            TotalBudget =  - refillAmount + withdrawAmount + ( runningMoney - refillAmount)
+        else:
+            TotalBudget =  - refillAmount + withdrawAmount 
 
-        TotalBudget = runningMoney - refillAmount + withdrawAmount
+        # TotalBudget =  runningMoney- refillAmount + withdrawAmount 
 
-    
         c.execute(""" 
                 INSERT INTO BudgetTrack VALUES(?,?,?,?,?,?)
                 """,(date,date_sample,runningMoney,refillAmount,withdrawAmount,TotalBudget))
         conn.commit()
+
+
         
 
 def CheckBetResult(c,conn):
     df = getUnknowBetResult(c)
     calGainAndBetAmount(c,df)
 
-
+conn = sqlite3.connect('./DailyData/SoccerData.db')
+c = conn.cursor()
+CheckBetResult(c,conn)
+c.close()
+conn.close()
 # df = getUnknowBetResult(c)
 # calGainAndBetAmount(c,df)
-
-# c.close()
-# conn.close()

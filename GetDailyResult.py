@@ -69,7 +69,7 @@ def getResults(key,ListMatchUpdate):
     return returnList
 
 
-def InsertUpdateResult(c,listData):
+def InsertUpdateResult(c,conn,listData):
     for request in listData:
         responses = request["response"]
 
@@ -110,14 +110,14 @@ def GetDailyResult(c,conn):
     listData = getResults("337bf8dbb961deefafa31fc66c0c8806",ListMatchUpdate)
     # print(listData)
     # print(listData)
-    InsertUpdateResult(c,listData)
+    InsertUpdateResult(c,conn,listData)
     # 
 
-conn = sqlite3.connect('./DailyData/SoccerData.db')
-c = conn.cursor()
-GetDailyResult(c,conn)
-c.close()
-conn.close()
+# conn = sqlite3.connect('./DailyData/SoccerData.db')
+# c = conn.cursor()
+# GetDailyResult(c,conn)
+# c.close()
+# conn.close()
 # key = "337bf8dbb961deefafa31fc66c0c8806"
 
 # ListMatchUpdate = getMatchWithOutResult(c)
