@@ -29,7 +29,6 @@ if lenBudgetTrack[0][0] == 0:
                 """,(today,date_sample,100,0,0,100))
 
     conn.commit()
-
 GetDailyMacth.getDailyMatch(c,conn)
 try:
     GetModelPrediction.GetModelPrediction(c,conn)

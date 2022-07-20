@@ -36,7 +36,7 @@ def getUnknowBetResult(c):
     df = df.sort_values(by = ["currentDate"])
     return df
 
-def calGainAndBetAmount(c,df):
+def calGainAndBetAmount(c,conn,df):
 
     softmaxList =[]
     for date in df["currentDate"].unique():
@@ -108,12 +108,11 @@ def calGainAndBetAmount(c,df):
 
 def CheckBetResult(c,conn):
     df = getUnknowBetResult(c)
-    calGainAndBetAmount(c,df)
+    calGainAndBetAmount(c,conn,df)
 
 conn = sqlite3.connect('./DailyData/SoccerData.db')
 c = conn.cursor()
 CheckBetResult(c,conn)
 c.close()
 conn.close()
-# df = getUnknowBetResult(c)
-# calGainAndBetAmount(c,df)
+

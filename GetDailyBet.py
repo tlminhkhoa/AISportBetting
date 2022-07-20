@@ -114,13 +114,9 @@ def GetDailyBet(c,conn):
     InsertTheBet(c,conn,df)
 
 
-# conn = sqlite3.connect('./DailyData/SoccerData.db')
-# c = conn.cursor()
-# GetDailyBet(c,conn)
-# c.close()
-# conn.close()
-# df = getKellyPositiveMatch(c)
-# df = df.apply(stripIsoTime,axis=1)
-# df = df.apply(addBetOdd,axis=1)
-# df = addBetDateProprtion(df)
-# InsertTheBet(c,df)
+conn = sqlite3.connect('./DailyData/SoccerData.db')
+c = conn.cursor()
+GetDailyBet(c,conn)
+c.close()
+conn.close()
+
