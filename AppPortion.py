@@ -22,7 +22,6 @@ def getBetDf():
         join modelData on SoccerMatch.fixtureId = modelData.fixtureId
         join Result on Result.fixtureId = SoccerMatch.fixtureId
         where modelData.KellyCriterion > 0.4
-
     """)
     listData = c.fetchall()
     commence_time = []
@@ -99,7 +98,6 @@ def getTeam(df,c,conn):
     awayTeam = []
     for id in df["fixtureId"]:
         c.execute("""
-
         select homeTeam , awayTeam from Team where fixtureId = ?
         
         """,(id,))

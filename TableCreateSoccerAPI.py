@@ -30,14 +30,6 @@ def create_table(c):
 )""")
 
   
-        c.execute("""CREATE TABLE IF NOT EXISTS BudgetTrack(
-  currentDate  char(25) PRIMARY KEY ,
-  currentDate_timestamp integer,
-  runningMoney real,
-  refillAmount integer,
-  withdrawAmount integer,
-  TotalBudget interger
- ) """) 
     
         c.execute("""CREATE TABLE IF NOT EXISTS modelData(
   fixtureId  integer PRIMARY KEY,
@@ -47,17 +39,6 @@ def create_table(c):
   FOREIGN KEY (fixtureId) REFERENCES SoccerMatch(fixtureId)
  )""")
 
-        c.execute("""CREATE TABLE IF NOT EXISTS PlaceBetTable(
-  fixtureId  integer PRIMARY KEY,
-  currentDate  char(25),
-  betToResult char (1),
-  betOdd DECIMAL(7, 6),
-  betDatePortion real,
-  BetAmount real,
-  Gain real,
-  FOREIGN KEY (fixtureId) REFERENCES SoccerMatch(fixtureId)
-  FOREIGN KEY (currentDate) REFERENCES BudgetTrack(currentDate)
- )""")
         
         conn.commit()
     except Exception as e:
